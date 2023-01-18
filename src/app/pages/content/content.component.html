@@ -1,0 +1,12 @@
+<input type="text" [(ngModel)]="searchText">
+
+<div class="teste">
+  <ul *ngFor="let pokemon of pokemons" >
+    <li>
+      <h1> {{pokemon.name}} </h1>
+    </li>
+    <li>
+      <img [src]="pokemon.sprites.front_default" alt="">
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,30 @@
+.pokemon_search {
+  width: 532px;
+  height: 74px;
+  padding: 10px 30px 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemon_search input {
+  margin-right: 15px;
+  height: 33px;
+  width: 290px;
+  left: 20px;
+  top: 10px;
+  border-radius: 5px;
+  background-color: rgba(201, 194, 133, 1);
+  border: none;
+}
+
+.pokemon_search button {
+  height: 33px;
+  width: 166px;
+  left: 325px;
+  top: 10px;
+  border-radius: 5px;
+  background: rgba(132, 187, 237, 1);
+  border: none;
+  cursor: pointer;
+}
