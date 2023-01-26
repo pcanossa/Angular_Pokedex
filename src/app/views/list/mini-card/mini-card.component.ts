@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, NgModule, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokeapiService } from 'src/app/services/pokeapi.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { empty, scheduled } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { Inject }  from '@angular/core';
+
 
 @Component({
   selector: 'app-mini-card',
@@ -14,15 +16,20 @@ export class MiniCardComponent implements OnInit {
   offset: number = 0;
   limit:number = 3;
   pokeTest:any[] = [];
-
-
+  allPokes:number = 0;
+  qntadePokeMarcador:number = 0;
+  order:any;
+  i:any;
+  id:any;
 
   constructor(
     private http:HttpClient,
     private getPoke:PokeapiService,
+    @Inject(DOCUMENT) document: Document
   ) {
     this.getPoke.getPokeDetails(this.offset, this.limit);
     this.pokeTest = this.getPoke['pokemons'];
+    this.allPokes = this.getPoke['allPokes'];
    }
 
 
@@ -35,38 +42,43 @@ export class MiniCardComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    this.allPokes = this.getPoke.allPokes;
   }
 
   nextPokemon() {
-    if (this.offset >= 0 && this.offset <= 1279) {
+    if (this.allPokes > 3 && this.allPokes <= this.getPoke.total) {
       this.offset += 3
       for (let i = 0; i < (this.getPoke['pokemons'].length+2); i++) {
         this.getPoke['pokemons'].pop();
       }
-      console.log(this.pokemons)
-      this.pokemons = this.getPoke.getPokeDetails(this.offset, this.limit);
-      console.log(this.pokemons)
+      this.getPoke.getPokeDetails(this.offset, this.limit);
+      this.allPokes = this.getPoke.allPokes
+      console.log(`total pokes service ${this.allPokes}`)
     }
 
   }
 
   backPokemon() {
-      if (this.offset > 0 && this.offset < 1279) {
+      if (this.allPokes > 0 && this.allPokes < 1279) {
       this.offset -= 3
       for (let i = 0; i < (this.getPoke['pokemons'].length+2); i++) {
         this.getPoke['pokemons'].pop();
       }
-      console.log(this.pokemons)
-      this.pokemons = this.getPoke.getPokeDetails(this.offset, this.limit);
-      console.log(this.pokemons)
+      this.getPoke.getPokeDetails(this.offset, this.limit);
+      this.allPokes += 3
+      this.qntadePokeMarcador = 3
+      this.qntadePokeMarcador = this.getPoke.qntdadePokes - 6
+      this.getPoke.qntdadePokes = this.qntadePokeMarcador
+      this.getPoke.allPokes = this.allPokes
+
     }
 
   }
 
 
 
-  changeBackground ():void {
-    const hoverClasse:any = document.getElementsByClassName("fund");
+  changeBackground (id:any):void {
+    const hoverClasse:any = document.getElementsByClassName(id);
 
     for (let i = 0; i < hoverClasse.length; i++) {
       let className = hoverClasse[i];
@@ -76,14 +88,25 @@ export class MiniCardComponent implements OnInit {
     }
   }
 
-  returnBackground ():void {
-    const hoverClasse:any = document.getElementsByClassName("fund");
+  returnBackground (id:any):void {
+    const hoverClasse:any = document.getElementsByClassName(id);
 
     for (let i = 0; i < hoverClasse.length; i++) {
       let className = hoverClasse[i];
       className.style.backgroundColor = "rgb(213,215,230)"
 
     }
+  }
+
+  returnOrder (i:any):void {
+    this.getPoke.order = 0;
+    this.id = i;
+    console.log(this.id);
+    console.log(this.getPoke.pokemons)
+    this.getPoke.order = this.getPoke.pokemons[this.id].id;
+
+    console.log(this.getPoke.order)
+    this.getPoke.getPokeBigCard(this.getPoke.order)
   }
 }
 

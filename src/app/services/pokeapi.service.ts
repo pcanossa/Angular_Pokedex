@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpClientJsonpModule, HttpParams } from '@angular/common/http';
-import { throwError, lastValueFrom, Observable } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+
 
 
 @Injectable({
@@ -15,18 +15,24 @@ export class PokeapiService {
   pokemons: any[] = [];
   offset: number = 0;
   limit: number = 3;
-
+  total:number = 1279;
+  allPokes:number = 0;
+  qntdadePokes:number = 0;
+  order:number = 1;
+  pokeBigCard:any[] = []
+  pokeHabilitys: any[] = []
 
   term:string = '';
   private url:string = 'https://pokeapi.co/api/v2/pokemon/';
 
   constructor(
     private http:HttpClient,
-  ) { }
+  ) {
+   }
 
 
   getPokeDetails(offset:number, limit:number):any {
-    //this.pokemons = [''];
+    this.total = 1279;
     this.http.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
       .subscribe({
         next: (response:any) => {
@@ -36,7 +42,7 @@ export class PokeapiService {
           .subscribe ({
           next: (response:any) => {
             this.pokemons.push(response)
-            console.log(this.pokemons)
+            this.qntdadePokes += 1;
           },
           error: (err) => console.log(err.message)
           })
@@ -44,17 +50,47 @@ export class PokeapiService {
         },
         error: (err) => console.log(err)
       })
+      console.log(`qntdade service ${this.qntdadePokes}`)
+      this.allPokes = this.total - this.qntdadePokes
     return this.pokemons
   }
 
   getPokeBId(id:string){
     this.http.get (this.url+id)
       .subscribe ({
-        next: (response:any) => this.pokemons.push(response),
+        next: (response:any) => {
+          this.pokemons.push(response)
+          this.total = this.pokemons.length
+          this.allPokes = this.total
+          console.log(this.allPokes)
+        },
         error: (err:any) => console.log(err.message)
       })
 
   }
+
+
+  getPokeBigCard (id:any): any {
+    this.pokeBigCard.pop()
+    for (let i = 0; i <= (this.pokeHabilitys.length+1); i++) {
+      this.pokeHabilitys.pop()
+    }
+    this.http.get (this.url+id)
+        .subscribe ({
+          next: (response:any) => {
+            this.pokeBigCard.push(response)
+            console.log(this.pokeBigCard);
+            for (let i = 0; i < 3; i++) {
+              this.pokeHabilitys.push(response.moves[i].move.name)
+            }
+          },
+          error: (err:any) => console.log(err.message)
+        })
+    return this.pokeBigCard
+  }
+
+
+
 
 
   handleError(error:HttpErrorResponse) {
@@ -65,6 +101,8 @@ export class PokeapiService {
   } else {
     errorMessage = `Código de Erro (servidor): ${error.status}, mensagem: ${error.message}`;
   }
+
+
 
   return throwError(errorMessage);
 }

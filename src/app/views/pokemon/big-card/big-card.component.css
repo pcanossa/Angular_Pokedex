@@ -35,7 +35,6 @@
 }
 
 .types_big_card ul li {
-  background-color: rgb(222, 125, 76);
   border-radius: 5px;
   margin-right: 10px;
   margin-top: 5px;
@@ -65,6 +64,78 @@
   height: 247px;
   width: 355px;
   top: 32px;
+}
+
+.grass {
+  background-color: rgb(153, 221, 198);
+}
+
+.poison {
+  background-color: rgb(159, 126, 190);
+}
+
+.bug {
+  background-color: rgb(209, 209, 34);
+}
+
+.fire {
+  background-color: rgb(237, 90, 90);
+}
+
+.ice {
+  background-color: rgb(137, 237, 237);
+}
+
+.water {
+  background-color: rgb(131, 131, 243);
+}
+
+.flying {
+  background-color: rgb(118, 171, 217);
+}
+
+.electric {
+  background-color: rgb(249, 253, 124);
+}
+
+.normal {
+  background-color: rgb(255, 255, 255);
+}
+
+.psychic {
+  background-color: rgb(244, 90, 159);
+}
+
+.ghost {
+  background-color: rgb(116, 100, 130);
+}
+
+.rock {
+  background-color: rgb(128, 128, 128);
+}
+
+.ground {
+  background-color: rgb(177, 135, 98);
+}
+
+.fairy {
+  background-color: rgb(253, 115, 237);
+}
+
+.fighting {
+  background-color: rgb(253, 138, 71);
+}
+
+.dragon {
+  background-color: rgb(69, 162, 131);
+}
+
+.dark {
+  background-color: rgb(152, 118, 118);
+}
+
+.steel {
+  background-color: rgb(90, 146, 170);
 }
 
 

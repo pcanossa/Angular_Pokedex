@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PokeapiService } from 'src/app/services/pokeapi.service';
 
 @Component({
   selector: 'app-title',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TitleComponent implements OnInit {
 
-  constructor() { }
+  offset: number = 0;
+  limit:number = 3;
+
+  constructor(
+    private pokeapi: PokeapiService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  returnHomeScreen():void {
+    for (let i = 0; i <= (this.pokeapi.pokemons.length+1); i++) {
+      this.pokeapi.pokemons.pop();
+    }
+    this.pokeapi.getPokeDetails(this.offset, this.limit);
   }
 
 }

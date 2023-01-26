@@ -11,6 +11,8 @@ import { PokeapiService } from 'src/app/services/pokeapi.service';
 export class ListComponent implements OnInit {
 
   pokemons:any =[];
+  offset: number = 0;
+  limit:number = 3;
 
 
 
@@ -18,7 +20,9 @@ export class ListComponent implements OnInit {
     private pokeapi: PokeapiService
   ) {}
 
-
+    returnHomeScreen():void {
+      this.pokeapi.getPokeDetails(this.offset, this.limit);
+    }
 
   ngOnInit(): void {
   }

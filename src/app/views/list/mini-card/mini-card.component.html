@@ -1,19 +1,21 @@
-<a href="#" (mouseover)="changeBackground()" (mouseleave)="returnBackground()" *ngFor="let pokemon of pokeTest">
-    <div class="mini_card fund">
-      <div class="img_mini_card fund">
-        <img class="fund" [src]="pokemon.sprites.front_default" alt="">
+<div class="div_mini_card" *ngFor="let pokemon of pokeTest; let i = index">
+  <a href="#" [class]=i (click)="returnOrder(i)" (mouseover)="changeBackground(i)" (mouseleave)="returnBackground(i)">
+      <div [class]="'mini_card '+i">
+        <div [class]="'img_mini_card fund '+i">
+          <img [class]="'img '+i" [src]="pokemon.sprites.front_default" [alt]="pokemon.name">
+        </div>
+        <div [class]="'info_mini_card fund '+i">
+          <h3 [class]="'pokemon_name '+i">{{pokemon.name.toUpperCase()}}</h3>
+          <h4 [class]="'pokemon_id '+i" >#{{pokemon.id}}</h4>
+          <ul [class]="'pokemon_types '+i">
+            <li *ngFor="let type of pokemon.types" [class]=type.type.name >{{type.type.name}}</li>
+          </ul>
+        </div>
       </div>
-      <div class="info_mini_card fund">
-        <h3 class="fund">{{pokemon.name.toUpperCase()}}</h3>
-        <h4 class="fund">#{{pokemon.id}}</h4>
-        <ul class="fund">
-          <li *ngFor="let type of pokemon.types" [class]=type.type.name >{{type.type.name}}</li>
-        </ul>
-      </div>
-    </div>
-</a>
+  </a>
+</div>
 <div class="nav_list">
   <h3 (click)="backPokemon()"><<</h3>
-  <h3>{{1279 - offset}}</h3>
+  <h3>{{allPokes}}</h3>
   <h3 (click)="nextPokemon()">>></h3>
 </div>

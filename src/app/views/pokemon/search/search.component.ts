@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
       this.pokeapi['pokemons'].pop();
     }
   this.pokeapi.getPokeBId(pokemon)
+  this.pokeapi['allPokes'] = this.pokeapi['pokemons'].length
   }
 
 }
