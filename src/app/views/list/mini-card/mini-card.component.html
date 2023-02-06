@@ -1,4 +1,4 @@
-<div class="div_mini_card" *ngFor="let pokemon of pokeTest; let i = index">
+<div class="div_mini_card" *ngFor="let pokemon of pokemons; let i = index">
   <a href="#" [class]=i (click)="returnOrder(i)" (mouseover)="changeBackground(i)" (mouseleave)="returnBackground(i)">
       <div [class]="'mini_card '+i">
         <div [class]="'img_mini_card fund '+i">

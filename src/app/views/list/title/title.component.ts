@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+//Services
 import { PokeapiService } from 'src/app/services/pokeapi.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class TitleComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //Retorno da lsitagem de Pokemons ao clicar no título
   returnHomeScreen():void {
     for (let i = 0; i <= (this.pokeapi.pokemons.length+1); i++) {
       this.pokeapi.pokemons.pop();

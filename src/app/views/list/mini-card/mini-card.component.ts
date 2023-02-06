@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PokeapiService } from 'src/app/services/pokeapi.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import { Inject }  from '@angular/core';
+
+//Services
+import { PokeapiService } from 'src/app/services/pokeapi.service';
 
 
 @Component({
@@ -23,12 +24,10 @@ export class MiniCardComponent implements OnInit {
   id:any;
 
   constructor(
-    private http:HttpClient,
     private getPoke:PokeapiService,
-    @Inject(DOCUMENT) document: Document
   ) {
     this.getPoke.getPokeDetails(this.offset, this.limit);
-    this.pokeTest = this.getPoke['pokemons'];
+    this.pokemons = this.getPoke['pokemons'];
     this.allPokes = this.getPoke['allPokes'];
    }
 
@@ -45,6 +44,7 @@ export class MiniCardComponent implements OnInit {
     this.allPokes = this.getPoke.allPokes;
   }
 
+  //Listagem dos próximos três Pokemons, ao clicar na seta de avanço da lista
   nextPokemon() {
     if (this.allPokes > 3 && this.allPokes <= this.getPoke.total) {
       this.offset += 3
@@ -53,11 +53,11 @@ export class MiniCardComponent implements OnInit {
       }
       this.getPoke.getPokeDetails(this.offset, this.limit);
       this.allPokes = this.getPoke.allPokes
-      console.log(`total pokes service ${this.allPokes}`)
     }
 
   }
 
+  //Listagem dos três Pokemons anteriores, ao clicar na seta de retorno da lista
   backPokemon() {
       if (this.allPokes > 0 && this.allPokes < 1279) {
       this.offset -= 3

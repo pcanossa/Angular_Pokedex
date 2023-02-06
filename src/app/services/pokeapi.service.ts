@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpClientJsonpModule, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 
 
@@ -30,7 +30,7 @@ export class PokeapiService {
   ) {
    }
 
-
+  //Retorno do Objeto com os dados dos Pokemons
   getPokeDetails(offset:number, limit:number):any {
     this.total = 1279;
     this.http.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
@@ -50,11 +50,11 @@ export class PokeapiService {
         },
         error: (err) => console.log(err)
       })
-      console.log(`qntdade service ${this.qntdadePokes}`)
       this.allPokes = this.total - this.qntdadePokes
     return this.pokemons
   }
 
+  //Retorno de objetoo com dados de um únicoo Pokemon
   getPokeBId(id:string){
     this.http.get (this.url+id)
       .subscribe ({
@@ -62,14 +62,13 @@ export class PokeapiService {
           this.pokemons.push(response)
           this.total = this.pokemons.length
           this.allPokes = this.total
-          console.log(this.allPokes)
         },
         error: (err:any) => console.log(err.message)
       })
 
   }
 
-
+  //Retorno de objeto de um único Pokemón, para apresentação de dados no BigCard
   getPokeBigCard (id:any): any {
     this.pokeBigCard.pop()
     for (let i = 0; i <= (this.pokeHabilitys.length+1); i++) {
@@ -79,7 +78,6 @@ export class PokeapiService {
         .subscribe ({
           next: (response:any) => {
             this.pokeBigCard.push(response)
-            console.log(this.pokeBigCard);
             for (let i = 0; i < 3; i++) {
               this.pokeHabilitys.push(response.moves[i].move.name)
             }
@@ -88,23 +86,5 @@ export class PokeapiService {
         })
     return this.pokeBigCard
   }
-
-
-
-
-
-  handleError(error:HttpErrorResponse) {
-    let errorMessage = '';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-  } else {
-    errorMessage = `Código de Erro (servidor): ${error.status}, mensagem: ${error.message}`;
-  }
-
-
-
-  return throwError(errorMessage);
-}
 
 }
